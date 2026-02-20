@@ -680,9 +680,11 @@
             margin-bottom: 3rem;
         }
 
+        /* Desktop table */
         .schedule-table {
             border: 1px solid var(--border);
             overflow: hidden;
+            display: none;
         }
 
         .table-header {
@@ -730,6 +732,76 @@
             letter-spacing: 0.1em;
             color: var(--gold) !important;
             font-weight: 700;
+        }
+
+        /* Mobile card layout */
+        .schedule-cards {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .schedule-time-group {
+            background: var(--smoke);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+            animation: slideUp 0.5s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .schedule-time-header {
+            background: var(--blue);
+            padding: 1.2rem;
+            color: var(--white);
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.5rem;
+            letter-spacing: 0.1em;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .schedule-time-slots {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .schedule-slot {
+            padding: 1.2rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .schedule-slot:last-child {
+            border-bottom: none;
+        }
+
+        .schedule-day {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--gold);
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            min-width: 80px;
+        }
+
+        .schedule-instructor {
+            color: var(--light);
+            font-size: 0.95rem;
+            text-align: right;
+            flex: 1;
         }
 
         .schedule-note {
@@ -1305,6 +1377,20 @@
             .stat-number { font-size: 3rem; }
             .pricing-top { padding: 2rem; }
             .cta-strip .section-heading { font-size: 3rem; }
+            
+            /* Schedule mobile */
+            .schedule-table { display: none !important; }
+            .schedule-cards { display: grid !important; }
+        }
+        
+        @media (max-width: 768px) {
+            .schedule-table { display: none !important; }
+            .schedule-cards { display: grid !important; }
+        }
+        
+        @media (min-width: 769px) {
+            .schedule-table { display: table !important; }
+            .schedule-cards { display: none !important; }
         }
     </style>
 </head>
@@ -1563,6 +1649,207 @@
                     <div>Charly / Barceló</div>
                     <div>Barceló</div>
                     <div>—</div>
+                </div>
+            </div>
+            
+            <!-- Mobile cards view -->
+            <div class="schedule-cards reveal">
+                <div class="schedule-time-group">
+                    <div class="schedule-time-header">7 A 9 HS</div>
+                    <div class="schedule-time-slots">
+                        <div class="schedule-slot">
+                            <span class="schedule-day">LUNES</span>
+                            <span class="schedule-instructor">Federico Rebagliati</span>
+                        </div>
+                        <div class="schedule-slot">
+                            <span class="schedule-day">MARTES</span>
+                            <span class="schedule-instructor">Federico Rebagliati</span>
+                        </div>
+                        <div class="schedule-slot">
+                            <span class="schedule-day">MIÉRCOLES</span>
+                            <span class="schedule-instructor">Federico Rebagliati</span>
+                        </div>
+                        <div class="schedule-slot">
+                            <span class="schedule-day">JUEVES</span>
+                            <span class="schedule-instructor">Federico Rebagliati</span>
+                        </div>
+                        <div class="schedule-slot">
+                            <span class="schedule-day">VIERNES</span>
+                            <span class="schedule-instructor">Federico Rebagliati</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="schedule-time-group">
+                    <div class="schedule-time-header">9 A 11 HS</div>
+                    <div class="schedule-time-slots">
+                        <div class="schedule-slot">
+                            <span class="schedule-day">LUNES</span>
+                            <span class="schedule-instructor">Sosa / Fede</span>
+                        </div>
+                        <div class="schedule-slot">
+                            <span class="schedule-day">MARTES</span>
+                            <span class="schedule-instructor">Sosa / Fede</span>
+                        </div>
+                        <div class="schedule-slot">
+                            <span class="schedule-day">MIÉRCOLES</span>
+                            <span class="schedule-instructor">Sosa / Fede</span>
+                        </div>
+                        <div class="schedule-slot">
+                            <span class="schedule-day">JUEVES</span>
+                            <span class="schedule-instructor">Sosa / Fede</span>
+                        </div>
+                        <div class="schedule-slot">
+                            <span class="schedule-day">VIERNES</span>
+                            <span class="schedule-instructor">Sosa / Fede</span>
+                        </div>
+                        <div class="schedule-slot">
+                            <span class="schedule-day">SÁBADO</span>
+                            <span class="schedule-instructor">Federico Rebagliati</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="schedule-time-group">
+                    <div class="schedule-time-header">11 A 13 HS</div>
+                    <div class="schedule-time-slots">
+                        <div class="schedule-slot">
+                            <span class="schedule-day">LUNES</span>
+                            <span class="schedule-instructor">Sosa / Fede</span>
+                        </div>
+                        <div class="schedule-slot">
+                            <span class="schedule-day">MARTES</span>
+                            <span class="schedule-instructor">Sosa / Fede</span>
+                        </div>
+                        <div class="schedule-slot">
+                            <span class="schedule-day">MIÉRCOLES</span>
+                            <span class="schedule-instructor">Sosa / Fede</span>
+                        </div>
+                        <div class="schedule-slot">
+                            <span class="schedule-day">JUEVES</span>
+                            <span class="schedule-instructor">Sosa / Fede</span>
+                        </div>
+                        <div class="schedule-slot">
+                            <span class="schedule-day">VIERNES</span>
+                            <span class="schedule-instructor">Sosa / Fede</span>
+                        </div>
+                        <div class="schedule-slot">
+                            <span class="schedule-day">SÁBADO</span>
+                            <span class="schedule-instructor">Federico Rebagliati</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="schedule-time-group">
+                    <div class="schedule-time-header">13 A 16 HS</div>
+                    <div class="schedule-time-slots">
+                        <div class="schedule-slot">
+                            <span class="schedule-day">LUNES</span>
+                            <span class="schedule-instructor">Barceló</span>
+                        </div>
+                        <div class="schedule-slot">
+                            <span class="schedule-day">MARTES</span>
+                            <span class="schedule-instructor">Barceló</span>
+                        </div>
+                        <div class="schedule-slot">
+                            <span class="schedule-day">MIÉRCOLES</span>
+                            <span class="schedule-instructor">Barceló</span>
+                        </div>
+                        <div class="schedule-slot">
+                            <span class="schedule-day">JUEVES</span>
+                            <span class="schedule-instructor">Barceló</span>
+                        </div>
+                        <div class="schedule-slot">
+                            <span class="schedule-day">VIERNES</span>
+                            <span class="schedule-instructor">Barceló</span>
+                        </div>
+                        <div class="schedule-slot">
+                            <span class="schedule-day">SÁBADO</span>
+                            <span class="schedule-instructor">Barceló ★</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="schedule-time-group">
+                    <div class="schedule-time-header">16 A 18 HS</div>
+                    <div class="schedule-time-slots">
+                        <div class="schedule-slot">
+                            <span class="schedule-day">LUNES</span>
+                            <span class="schedule-instructor">Pitto</span>
+                        </div>
+                        <div class="schedule-slot">
+                            <span class="schedule-day">MARTES</span>
+                            <span class="schedule-instructor">Pitto</span>
+                        </div>
+                        <div class="schedule-slot">
+                            <span class="schedule-day">MIÉRCOLES</span>
+                            <span class="schedule-instructor">Pitto</span>
+                        </div>
+                        <div class="schedule-slot">
+                            <span class="schedule-day">JUEVES</span>
+                            <span class="schedule-instructor">Pitto</span>
+                        </div>
+                        <div class="schedule-slot">
+                            <span class="schedule-day">VIERNES</span>
+                            <span class="schedule-instructor">Pitto</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="schedule-time-group">
+                    <div class="schedule-time-header">18 A 20 HS</div>
+                    <div class="schedule-time-slots">
+                        <div class="schedule-slot">
+                            <span class="schedule-day">LUNES</span>
+                            <span class="schedule-instructor">S. Quintans</span>
+                        </div>
+                        <div class="schedule-slot">
+                            <span class="schedule-day">MARTES</span>
+                            <span class="schedule-instructor">S. Quintans</span>
+                        </div>
+                        <div class="schedule-slot">
+                            <span class="schedule-day">MIÉRCOLES</span>
+                            <span class="schedule-instructor">S. Quintans</span>
+                        </div>
+                        <div class="schedule-slot">
+                            <span class="schedule-day">JUEVES</span>
+                            <span class="schedule-instructor">S. Quintans</span>
+                        </div>
+                        <div class="schedule-slot">
+                            <span class="schedule-day">VIERNES</span>
+                            <span class="schedule-instructor">S. Quintans</span>
+                        </div>
+                        <div class="schedule-slot">
+                            <span class="schedule-day">SÁBADO</span>
+                            <span class="schedule-instructor">Javier Torres</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="schedule-time-group">
+                    <div class="schedule-time-header">20 A 22 HS</div>
+                    <div class="schedule-time-slots">
+                        <div class="schedule-slot">
+                            <span class="schedule-day">LUNES</span>
+                            <span class="schedule-instructor">Barceló</span>
+                        </div>
+                        <div class="schedule-slot">
+                            <span class="schedule-day">MARTES</span>
+                            <span class="schedule-instructor">Charly / Barceló</span>
+                        </div>
+                        <div class="schedule-slot">
+                            <span class="schedule-day">MIÉRCOLES</span>
+                            <span class="schedule-instructor">Barceló</span>
+                        </div>
+                        <div class="schedule-slot">
+                            <span class="schedule-day">JUEVES</span>
+                            <span class="schedule-instructor">Charly / Barceló</span>
+                        </div>
+                        <div class="schedule-slot">
+                            <span class="schedule-day">VIERNES</span>
+                            <span class="schedule-instructor">Barceló</span>
+                        </div>
+                    </div>
                 </div>
             </div>
             <p class="schedule-note reveal">★ Los sábados de 13 a 16 hs se realiza "Día de Guanteo" con el profesor Barceló.</p>
