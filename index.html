@@ -1,0 +1,1830 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Almagro Boxing Club | 103 Años Formando Campeones</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --black: #080808;
+            --dark: #0f0f0f;
+            --carbon: #141414;
+            --smoke: #1e1e1e;
+            --border: #252525;
+            --ash: #888;
+            --muted: #555;
+            --white: #f0ece6;
+            --light: #d4cfc9;
+            --gold: #d4a843;
+            --gold-dim: #a8832f;
+            --gold-glow: rgba(212,168,67,0.15);
+            --blue: #1a2e6e;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Syne', sans-serif;
+            background: var(--black);
+            color: var(--white);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        ::selection {
+            background: var(--gold);
+            color: var(--black);
+        }
+
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: var(--dark); }
+        ::-webkit-scrollbar-thumb { background: var(--gold); }
+
+        /* GRAIN OVERLAY */
+        .grain {
+            position: fixed;
+            inset: 0;
+            z-index: 9000;
+            pointer-events: none;
+            opacity: 0.04;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+            background-repeat: repeat;
+            background-size: 200px 200px;
+        }
+
+        /* CONTAINER */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* ═══════════════════════════════════════ NAVIGATION */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(8,8,8,0.88);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(212,168,67,0.08);
+            transition: background 0.3s ease;
+        }
+
+        header.scrolled {
+            background: rgba(8,8,8,0.97);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.1rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+        }
+
+        .logo img {
+            height: 38px;
+            width: 38px;
+            object-fit: contain;
+            mix-blend-mode: screen;
+            filter: brightness(1.1);
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover img {
+            transform: scale(1.05) rotate(-3deg);
+        }
+
+        .logo-name {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.1rem;
+            letter-spacing: 0.15em;
+            color: var(--gold);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2.5rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            font-family: 'Space Mono', monospace;
+            color: var(--light);
+            text-decoration: none;
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 1.5px;
+            background: var(--gold);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--gold);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-cta {
+            font-family: 'Bebas Neue', sans-serif !important;
+            letter-spacing: 0.15em !important;
+            font-size: 0.85rem !important;
+            background: var(--gold) !important;
+            color: var(--black) !important;
+            padding: 0.55rem 1.4rem;
+            border-radius: 2px;
+        }
+
+        .nav-cta::after { display: none !important; }
+
+        .nav-cta:hover {
+            background: #e0b84d !important;
+            color: var(--black) !important;
+            transform: translateY(-1px);
+        }
+
+        /* HAMBURGER */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            z-index: 1100;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 24px;
+            height: 1.5px;
+            background: var(--white);
+            transition: all 0.3s ease;
+        }
+
+        .hamburger.active span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+        .hamburger.active span:nth-child(2) { opacity: 0; }
+        .hamburger.active span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(8,8,8,0.98);
+            z-index: 999;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 3rem;
+        }
+
+        .mobile-menu.active { display: flex; }
+
+        .mobile-menu a {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 3.5rem;
+            letter-spacing: 0.1em;
+            color: var(--white);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .mobile-menu a:hover { color: var(--gold); }
+
+        /* ═══════════════════════════════════════ HERO */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            background: var(--black);
+        }
+
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            background-image: url('hero.jpg');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.45;
+            filter: grayscale(15%);
+        }
+
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: 
+                radial-gradient(ellipse at 20% 50%, rgba(212,168,67,0.07) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 80%, rgba(26,46,110,0.2) 0%, transparent 60%),
+                linear-gradient(to bottom, rgba(8,8,8,0.2) 0%, rgba(8,8,8,0.6) 60%, rgba(8,8,8,0.95) 100%);
+        }
+
+        .hero-line {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 1px;
+            background: linear-gradient(to bottom, transparent, rgba(212,168,67,0.12), transparent);
+            animation: lineSlide 1.5s ease forwards;
+            opacity: 0;
+        }
+
+        .hero-line:nth-child(1) { left: 15%; animation-delay: 0.3s; }
+        .hero-line:nth-child(2) { right: 20%; animation-delay: 0.6s; }
+
+        @keyframes lineSlide {
+            from { opacity: 0; transform: scaleY(0); transform-origin: top; }
+            to { opacity: 1; transform: scaleY(1); transform-origin: top; }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            max-width: 860px;
+            padding: 0 2rem;
+        }
+
+        .hero-tag {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.72rem;
+            letter-spacing: 0.5em;
+            color: var(--gold);
+            text-transform: uppercase;
+            margin-bottom: 2rem;
+            opacity: 0;
+            animation: fadeUp 0.8s ease forwards;
+            animation-delay: 0.4s;
+        }
+
+        .hero h1 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(4.5rem, 12vw, 10rem);
+            line-height: 0.9;
+            letter-spacing: 0.02em;
+            margin-bottom: 2rem;
+            opacity: 0;
+            animation: fadeUp 0.8s ease forwards;
+            animation-delay: 0.7s;
+        }
+
+        .hero h1 .outline {
+            -webkit-text-stroke: 1.5px var(--white);
+            color: transparent;
+        }
+
+        .hero h1 .gold { color: var(--gold); }
+
+        .hero-desc {
+            font-size: 1rem;
+            color: rgba(240,236,230,0.75);
+            max-width: 560px;
+            margin: 0 auto 3rem;
+            line-height: 1.8;
+            opacity: 0;
+            animation: fadeUp 0.8s ease forwards;
+            animation-delay: 1s;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            opacity: 0;
+            animation: fadeUp 0.8s ease forwards;
+            animation-delay: 1.2s;
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(24px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .btn {
+            font-family: 'Bebas Neue', sans-serif;
+            letter-spacing: 0.12em;
+            font-size: 1rem;
+            padding: 1rem 2.5rem;
+            border-radius: 2px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-block;
+            border: 2px solid transparent;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: var(--gold);
+            color: var(--black);
+            border-color: var(--gold);
+        }
+
+        .btn-primary:hover {
+            background: #e0b84d;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(212,168,67,0.3);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--white);
+            border-color: rgba(240,236,230,0.35);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--gold);
+            color: var(--gold);
+        }
+
+        /* ═══════════════════════════════════════ MARQUEE */
+        .marquee-wrap {
+            background: var(--carbon);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            overflow: hidden;
+            padding: 0;
+        }
+
+        .marquee-track {
+            display: flex;
+            white-space: nowrap;
+            padding: 1.1rem 0;
+        }
+
+        .marquee-track.reverse { animation-direction: reverse; }
+
+        .marquee-inner {
+            display: inline-flex;
+            animation: marquee 30s linear infinite;
+            gap: 0;
+        }
+
+        .marquee-inner span {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.72rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--ash);
+            padding: 0 2.5rem;
+        }
+
+        .marquee-inner span.dot {
+            color: var(--gold);
+            padding: 0;
+            letter-spacing: 0;
+        }
+
+        @keyframes marquee {
+            from { transform: translateX(0); }
+            to { transform: translateX(-50%); }
+        }
+
+        /* ═══════════════════════════════════════ STATS */
+        .stats {
+            background: var(--dark);
+            padding: 5rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0;
+        }
+
+        .stat-item {
+            padding: 3rem 2rem;
+            text-align: center;
+            border-right: 1px solid var(--border);
+            position: relative;
+        }
+
+        .stat-item:last-child { border-right: none; }
+
+        .stat-item::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 2px;
+            background: var(--gold);
+            transition: width 0.4s ease;
+        }
+
+        .stat-item:hover::before { width: 60%; }
+
+        .stat-number {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 4rem;
+            color: var(--gold);
+            line-height: 1;
+            margin-bottom: 0.5rem;
+            letter-spacing: 0.02em;
+        }
+
+        .stat-label {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.65rem;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--ash);
+        }
+
+        /* ═══════════════════════════════════════ SECTION COMMON */
+        .section-tag {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.68rem;
+            letter-spacing: 0.4em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 1.25rem;
+            display: block;
+        }
+
+        .section-heading {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(2.8rem, 6vw, 5rem);
+            line-height: 0.95;
+            letter-spacing: 0.03em;
+            color: var(--white);
+        }
+
+        /* ═══════════════════════════════════════ ABOUT */
+        .about {
+            background: var(--black);
+            padding: 8rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6rem;
+            align-items: center;
+        }
+
+        .about-image-box {
+            position: relative;
+            min-height: 540px;
+            background: var(--carbon);
+            border: 1px solid var(--border);
+            overflow: auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .about-image-box img {
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+            position: relative;
+            opacity: 0.85;
+            filter: grayscale(20%);
+            transition: transform 0.6s ease, opacity 0.3s ease;
+            padding: 2rem;
+        }
+
+        .about-image-box:hover img {
+            transform: scale(1.03);
+            opacity: 0.95;
+        }
+
+        .about-image-tag {
+            position: absolute;
+            bottom: 1.5rem;
+            left: 1.5rem;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.6rem;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--black);
+            background: var(--gold);
+            padding: 0.4rem 0.8rem;
+            z-index: 2;
+        }
+
+        .about-text .section-heading {
+            margin-bottom: 2rem;
+        }
+
+        .about-text p {
+            color: rgba(240,236,230,0.7);
+            line-height: 1.9;
+            margin-bottom: 1.25rem;
+            font-size: 0.97rem;
+        }
+
+        .about-text p strong { color: var(--gold); font-weight: 600; }
+
+        .about-features {
+            margin-top: 2.5rem;
+            display: grid;
+            gap: 1rem;
+            border-top: 1px solid var(--border);
+            padding-top: 2rem;
+        }
+
+        .feature {
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+        }
+
+        .feature-icon {
+            color: var(--gold);
+            font-size: 0.6rem;
+            margin-top: 0.5rem;
+            flex-shrink: 0;
+        }
+
+        .feature-text {
+            font-size: 0.9rem;
+            color: rgba(240,236,230,0.7);
+            line-height: 1.5;
+        }
+
+        /* ═══════════════════════════════════════ WHY BOXING */
+        .why-boxing {
+            background: var(--dark);
+            padding: 8rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .why-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 4rem;
+        }
+
+        .why-header p {
+            font-size: 0.95rem;
+            color: var(--ash);
+            max-width: 320px;
+            line-height: 1.7;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1px;
+            background: var(--border);
+            border: 1px solid var(--border);
+        }
+
+        .benefit-card {
+            background: var(--dark);
+            padding: 2.5rem 2rem;
+            transition: background 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .benefit-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--gold);
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+
+        .benefit-card:hover {
+            background: var(--carbon);
+        }
+
+        .benefit-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .benefit-num {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 5rem;
+            line-height: 1;
+            color: rgba(212,168,67,0.06);
+            position: absolute;
+            top: 1rem;
+            right: 1.5rem;
+            letter-spacing: 0;
+        }
+
+        .benefit-icon {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            display: block;
+        }
+
+        .benefit-card h3 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.3rem;
+            letter-spacing: 0.08em;
+            color: var(--white);
+            margin-bottom: 0.75rem;
+        }
+
+        .benefit-card p {
+            font-size: 0.88rem;
+            color: var(--ash);
+            line-height: 1.7;
+        }
+
+        /* ═══════════════════════════════════════ SCHEDULE */
+        .schedule {
+            background: var(--black);
+            padding: 8rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .schedule-header {
+            margin-bottom: 3rem;
+        }
+
+        .schedule-table {
+            border: 1px solid var(--border);
+            overflow: hidden;
+        }
+
+        .table-header {
+            display: grid;
+            grid-template-columns: 1.3fr repeat(6, 1fr);
+            background: var(--gold);
+            color: var(--black);
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 0.95rem;
+            letter-spacing: 0.08em;
+        }
+
+        .table-header > div, .table-row > div {
+            padding: 1.1rem 1rem;
+            border-right: 1px solid rgba(0,0,0,0.1);
+        }
+
+        .table-header > div:last-child, .table-row > div:last-child {
+            border-right: none;
+        }
+
+        .table-row {
+            display: grid;
+            grid-template-columns: 1.3fr repeat(6, 1fr);
+            border-bottom: 1px solid var(--border);
+            align-items: center;
+            transition: background 0.2s ease;
+        }
+
+        .table-row:last-child { border-bottom: none; }
+
+        .table-row:hover { background: var(--carbon); }
+
+        .table-row > div {
+            border-right: 1px solid var(--border);
+            font-size: 0.85rem;
+            color: rgba(240,236,230,0.75);
+        }
+
+        .table-row > div:last-child { border-right: none; }
+
+        .time-slot {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.75rem !important;
+            letter-spacing: 0.1em;
+            color: var(--gold) !important;
+            font-weight: 700;
+        }
+
+        .schedule-note {
+            margin-top: 1.5rem;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.7rem;
+            letter-spacing: 0.05em;
+            color: var(--muted);
+            font-style: italic;
+        }
+
+        /* ═══════════════════════════════════════ PRICING */
+        .pricing {
+            background: var(--dark);
+            padding: 8rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .pricing-header {
+            text-align: center;
+            margin-bottom: 5rem;
+        }
+
+        .pricing-header p {
+            margin-top: 1rem;
+            color: var(--ash);
+            font-size: 0.95rem;
+        }
+
+        .pricing-card {
+            max-width: 900px;
+            margin: 0 auto;
+            border: 1px solid var(--border);
+            background: var(--carbon);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pricing-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--gold), var(--gold-dim));
+        }
+
+        .pricing-top {
+            padding: 3.5rem;
+            border-bottom: 1px solid var(--border);
+            display: grid;
+            grid-template-columns: 1fr auto;
+            align-items: start;
+            gap: 2rem;
+        }
+
+        .pricing-badge {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.65rem;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            background: var(--gold);
+            color: var(--black);
+            padding: 0.35rem 0.8rem;
+            display: inline-block;
+            margin-bottom: 1.5rem;
+        }
+
+        .pricing-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2.5rem;
+            letter-spacing: 0.05em;
+            color: var(--white);
+            margin-bottom: 0.5rem;
+        }
+
+        .pricing-desc {
+            font-size: 0.88rem;
+            color: var(--ash);
+            line-height: 1.7;
+            max-width: 420px;
+        }
+
+        .pricing-price-box { text-align: right; }
+
+        .pricing-price {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 5rem;
+            line-height: 1;
+            color: var(--white);
+            letter-spacing: -0.02em;
+        }
+
+        .pricing-period {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.65rem;
+            color: var(--ash);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        .pricing-breakdown {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .pricing-item {
+            padding: 2.5rem 2rem;
+            border-right: 1px solid var(--border);
+            text-align: center;
+        }
+
+        .pricing-item:last-child { border-right: none; }
+
+        .pricing-item-price {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2.5rem;
+            color: var(--gold);
+            letter-spacing: 0.02em;
+        }
+
+        .pricing-item-label {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.62rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--ash);
+            margin-top: 0.4rem;
+        }
+
+        .pricing-includes {
+            padding: 2.5rem 3.5rem;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+
+        .pricing-feature {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 0.88rem;
+            color: rgba(240,236,230,0.8);
+        }
+
+        .pricing-feature::before {
+            content: '✓';
+            color: var(--gold);
+            font-weight: 700;
+            font-size: 0.8rem;
+            flex-shrink: 0;
+        }
+
+        .pricing-cta {
+            padding: 0 3.5rem 3rem;
+        }
+
+        /* ═══════════════════════════════════════ FAQ */
+        .faq {
+            background: var(--black);
+            padding: 8rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .faq-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .faq-header p {
+            margin-top: 1rem;
+            color: var(--ash);
+        }
+
+        .faq-grid {
+            max-width: 760px;
+            margin: 0 auto;
+            display: grid;
+            gap: 0;
+            border: 1px solid var(--border);
+        }
+
+        .faq-item {
+            border-bottom: 1px solid var(--border);
+        }
+
+        .faq-item:last-child { border-bottom: none; }
+
+        .faq-question {
+            font-size: 0.95rem;
+            color: var(--white);
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.75rem 2rem;
+            transition: color 0.3s ease;
+            gap: 1rem;
+        }
+
+        .faq-question:hover { color: var(--gold); }
+
+        .faq-question .faq-icon {
+            font-family: 'Space Mono', monospace;
+            font-size: 1.2rem;
+            color: var(--gold);
+            flex-shrink: 0;
+            transition: transform 0.3s ease;
+            line-height: 1;
+        }
+
+        .faq-item.active .faq-icon { transform: rotate(45deg); }
+
+        .faq-answer {
+            display: none;
+            padding: 0 2rem 1.75rem;
+            color: var(--ash);
+            line-height: 1.8;
+            font-size: 0.92rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .faq-item.active .faq-answer { display: block; }
+
+        /* ═══════════════════════════════════════ CONTACT */
+        .contact {
+            background: var(--dark);
+            padding: 8rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .contact-header {
+            text-align: center;
+            margin-bottom: 5rem;
+        }
+
+        .contact-header p {
+            margin-top: 1rem;
+            color: var(--ash);
+            font-size: 0.97rem;
+            max-width: 480px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: start;
+        }
+
+        .info-list {
+            display: grid;
+            gap: 0;
+            border: 1px solid var(--border);
+        }
+
+        .info-item {
+            display: flex;
+            gap: 1.5rem;
+            align-items: flex-start;
+            padding: 1.75rem 2rem;
+            border-bottom: 1px solid var(--border);
+            transition: background 0.2s ease;
+        }
+
+        .info-item:last-child { border-bottom: none; }
+        .info-item:hover { background: var(--carbon); }
+
+        .info-icon {
+            font-size: 1.3rem;
+            flex-shrink: 0;
+            margin-top: 0.1rem;
+        }
+
+        .info-content h3 {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.65rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 0.4rem;
+        }
+
+        .info-content p {
+            font-size: 0.88rem;
+            color: rgba(240,236,230,0.75);
+            line-height: 1.6;
+        }
+
+        .cta-box {
+            border: 1px solid var(--border);
+            background: var(--carbon);
+            padding: 3rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--gold);
+        }
+
+        .cta-box img {
+            height: 80px;
+            margin-bottom: 2rem;
+            mix-blend-mode: screen;
+            filter: brightness(1.1);
+            opacity: 0.9;
+        }
+
+        .cta-box h3 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2rem;
+            letter-spacing: 0.08em;
+            margin-bottom: 1rem;
+        }
+
+        .cta-box p {
+            color: var(--ash);
+            font-size: 0.88rem;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+
+        .cta-box-buttons {
+            display: grid;
+            gap: 0.75rem;
+        }
+
+        .cta-btn-link {
+            display: block;
+            padding: 0.9rem 1rem;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 0.95rem;
+            letter-spacing: 0.1em;
+            border: 1px solid var(--border);
+            color: var(--light);
+            text-decoration: none;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .cta-btn-link:hover {
+            border-color: var(--gold);
+            color: var(--gold);
+        }
+
+        .cta-btn-link.primary {
+            background: var(--gold);
+            color: var(--black);
+            border-color: var(--gold);
+        }
+
+        .cta-btn-link.primary:hover {
+            background: #e0b84d;
+        }
+
+        /* ═══════════════════════════════════════ CTA STRIP */
+        .cta-strip {
+            background: var(--black);
+            padding: 8rem 0;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-strip::before {
+            content: 'ABC';
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 25vw;
+            color: rgba(212,168,67,0.025);
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            letter-spacing: 0.1em;
+            pointer-events: none;
+            white-space: nowrap;
+        }
+
+        .cta-strip .section-heading {
+            font-size: clamp(3.5rem, 8vw, 7rem);
+            margin: 1.5rem 0;
+        }
+
+        .cta-strip .section-heading span { color: var(--gold); }
+
+        .cta-strip p {
+            color: var(--ash);
+            font-size: 0.97rem;
+            margin-bottom: 3rem;
+        }
+
+        .whatsapp-btn-main {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            background: var(--gold);
+            color: var(--black);
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.1rem;
+            letter-spacing: 0.12em;
+            padding: 1.1rem 2.8rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .whatsapp-btn-main:hover {
+            background: #e0b84d;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 40px rgba(212,168,67,0.3);
+        }
+
+        /* ═══════════════════════════════════════ FOOTER */
+        footer {
+            background: var(--carbon);
+            border-top: 1px solid var(--border);
+            padding: 4rem 0 2rem;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 4rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-brand .logo {
+            margin-bottom: 1.25rem;
+            display: flex;
+        }
+
+        .footer-brand p {
+            font-size: 0.85rem;
+            color: var(--muted);
+            line-height: 1.8;
+            max-width: 280px;
+        }
+
+        .footer-col h4 {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.65rem;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-col ul {
+            list-style: none;
+            display: grid;
+            gap: 0.75rem;
+        }
+
+        .footer-col ul li a {
+            font-size: 0.85rem;
+            color: var(--muted);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-col ul li a:hover { color: var(--white); }
+
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+            gap: 1rem;
+        }
+
+        .footer-bottom p {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.62rem;
+            letter-spacing: 0.1em;
+            color: var(--muted);
+        }
+
+        /* ═══════════════════════════════════════ WHATSAPP FLOAT */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 56px;
+            height: 56px;
+            z-index: 999;
+            border-radius: 50%;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.15);
+            box-shadow: 0 6px 30px rgba(0,0,0,0.5);
+        }
+
+        .whatsapp-float img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        /* ═══════════════════════════════════════ REVEAL */
+        .reveal {
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ═══════════════════════════════════════ RESPONSIVE */
+        @media (max-width: 1024px) {
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .stat-item { border-bottom: 1px solid var(--border); }
+            .benefits-grid { grid-template-columns: repeat(2, 1fr); }
+            .footer-grid { grid-template-columns: 1fr 1fr; }
+        }
+
+        @media (max-width: 768px) {
+            nav { padding: 1rem 1.5rem; }
+            .nav-links { display: none; }
+            .hamburger { display: flex; }
+
+            .hero h1 { font-size: clamp(3.5rem, 14vw, 6rem); }
+
+            .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+            .about-image-box { min-height: 320px; }
+
+            .why-header { flex-direction: column; align-items: flex-start; gap: 1rem; }
+            .benefits-grid { grid-template-columns: 1fr; }
+
+            .table-header, .table-row {
+                grid-template-columns: 1fr;
+            }
+
+            .pricing-top { grid-template-columns: 1fr; }
+            .pricing-price-box { text-align: left; }
+            .pricing-breakdown { grid-template-columns: 1fr; }
+            .pricing-item { border-right: none; border-bottom: 1px solid var(--border); }
+            .pricing-item:last-child { border-bottom: none; }
+            .pricing-includes { grid-template-columns: 1fr; padding: 2rem; }
+            .pricing-cta { padding: 0 2rem 2.5rem; }
+
+            .contact-grid { grid-template-columns: 1fr; }
+
+            .footer-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+            .footer-bottom { flex-direction: column; text-align: center; }
+
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 480px) {
+            .container { padding: 0 1.25rem; }
+            .stats-grid { grid-template-columns: 1fr 1fr; }
+            .stat-number { font-size: 3rem; }
+            .pricing-top { padding: 2rem; }
+            .cta-strip .section-heading { font-size: 3rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- GRAIN TEXTURE -->
+    <div class="grain"></div>
+
+    <!-- MOBILE MENU -->
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="#inicio" onclick="closeMobile()">INICIO</a>
+        <a href="#nosotros" onclick="closeMobile()">NOSOTROS</a>
+        <a href="#horarios" onclick="closeMobile()">HORARIOS</a>
+        <a href="#precios" onclick="closeMobile()">PRECIOS</a>
+        <a href="#contacto" onclick="closeMobile()">CONTACTO</a>
+        <a href="#contacto" onclick="closeMobile()" class="nav-cta">¡INSCRIBITE!</a>
+    </div>
+
+    <!-- HEADER -->
+    <header id="header">
+        <nav>
+            <a href="#inicio" class="logo">
+                <img src="logo.png" alt="ABC Logo">
+                <span class="logo-name">ALMAGRO BOXING</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="#inicio">INICIO</a></li>
+                <li><a href="#nosotros">NOSOTROS</a></li>
+                <li><a href="#horarios">HORARIOS</a></li>
+                <li><a href="#precios">PRECIOS</a></li>
+                <li><a href="#contacto">CONTACTO</a></li>
+                <li><a href="#contacto" class="nav-cta">¡INSCRIBITE!</a></li>
+            </ul>
+            <div class="hamburger" id="hamburger" onclick="toggleMobile()">
+                <span></span><span></span><span></span>
+            </div>
+        </nav>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero" id="inicio">
+        <div class="hero-bg"></div>
+        <div class="hero-overlay"></div>
+        <div class="hero-line"></div>
+        <div class="hero-line"></div>
+        <div class="hero-content">
+            <span class="hero-tag">// Desde 1923 · Buenos Aires · Argentina</span>
+            <h1>
+                103 AÑOS<br>
+                <span class="outline">FORMANDO</span><br>
+                <span class="gold">CAMPEONES</span>
+            </h1>
+            <p class="hero-desc">
+                El mismo ring donde entrenaron campeones mundiales y medallistas olímpicos. Sin importar tu edad ni experiencia — acá te recibimos con los guantes abiertos.
+            </p>
+            <div class="hero-buttons">
+                <a href="#precios" class="btn btn-primary">EMPEZÁ A ENTRENAR</a>
+                <a href="#nosotros" class="btn btn-outline">NUESTRA HISTORIA</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- MARQUEE -->
+    <div class="marquee-wrap">
+        <div class="marquee-track">
+            <div class="marquee-inner">
+                <span>ALMAGRO BOXING CLUB</span><span class="dot"> ✦ </span>
+                <span>DESDE 1923</span><span class="dot"> ✦ </span>
+                <span>BUENOS AIRES</span><span class="dot"> ✦ </span>
+                <span>CAMPEONES MUNDIALES</span><span class="dot"> ✦ </span>
+                <span>MEDALLISTAS OLÍMPICOS</span><span class="dot"> ✦ </span>
+                <span>ALMAGRO BOXING CLUB</span><span class="dot"> ✦ </span>
+                <span>DESDE 1923</span><span class="dot"> ✦ </span>
+                <span>BUENOS AIRES</span><span class="dot"> ✦ </span>
+                <span>CAMPEONES MUNDIALES</span><span class="dot"> ✦ </span>
+                <span>MEDALLISTAS OLÍMPICOS</span><span class="dot"> ✦ </span>
+            </div>
+        </div>
+    </div>
+
+    <!-- STATS -->
+    <section class="stats">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item reveal">
+                    <div class="stat-number">1923</div>
+                    <div class="stat-label">AÑO DE FUNDACIÓN</div>
+                </div>
+                <div class="stat-item reveal" style="transition-delay:0.1s">
+                    <div class="stat-number">6+</div>
+                    <div class="stat-label">OLÍMPICOS FORMADOS</div>
+                </div>
+                <div class="stat-item reveal" style="transition-delay:0.2s">
+                    <div class="stat-number">+500</div>
+                    <div class="stat-label">ALUMNOS ACTIVOS</div>
+                </div>
+                <div class="stat-item reveal" style="transition-delay:0.3s">
+                    <div class="stat-number">8</div>
+                    <div class="stat-label">PROFESORES</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section class="about" id="nosotros">
+        <div class="container">
+            <div class="about-grid">
+                <div class="about-image-box reveal">
+                    <img src="gloves.jpg" alt="Guantes ABC">
+                    <span class="about-image-tag">EST. 1923 · ALMAGRO</span>
+                </div>
+                <div class="about-text">
+                    <span class="section-tag reveal">// Quiénes somos</span>
+                    <h2 class="section-heading reveal">MÁS QUE UN<br>GIMNASIO,<br>UNA TRADICIÓN</h2>
+                    <p class="reveal" style="margin-top:2rem">Fundado el 30 de abril de 1923, el Almagro Boxing Club es una de las instituciones deportivas más antiguas de Argentina. Por este ring pasó <strong>Pascual Pérez</strong> — el primer campeón mundial argentino — y medallistas olímpicos que llevaron nuestros colores al mundo entero.</p>
+                    <p class="reveal">Hoy, con la misma pasión de siempre, nuestros profesores comparten todo lo que aprendieron dentro y fuera del ring. No importa si nunca tiraste un golpe o si querés competir: <strong>acá hay un lugar para vos</strong>.</p>
+                    <div class="about-features reveal">
+                        <div class="feature"><span class="feature-icon">◆</span><span class="feature-text">Entrenamiento personalizado para todos los niveles</span></div>
+                        <div class="feature"><span class="feature-icon">◆</span><span class="feature-text">Profesores con experiencia internacional</span></div>
+                        <div class="feature"><span class="feature-icon">◆</span><span class="feature-text">Ambiente familiar y de respeto mutuo</span></div>
+                        <div class="feature"><span class="feature-icon">◆</span><span class="feature-text">Horarios amplios de lunes a sábado</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- WHY BOXING -->
+    <section class="why-boxing">
+        <div class="container">
+            <div class="why-header">
+                <div>
+                    <span class="section-tag reveal">// Por qué boxeo</span>
+                    <h2 class="section-heading reveal">UN DEPORTE<br>QUE TRANSFORMA</h2>
+                </div>
+                <p class="reveal">Cuerpo, mente y confianza. El boxeo no es solo un deporte — es una herramienta de vida.</p>
+            </div>
+            <div class="benefits-grid">
+                <div class="benefit-card reveal">
+                    <span class="benefit-num">01</span>
+                    <span class="benefit-icon">💪</span>
+                    <h3>ENTRENAMIENTO COMPLETO</h3>
+                    <p>Fuerza, resistencia, velocidad y técnica en cada clase. Progresás de manera visible semana a semana.</p>
+                </div>
+                <div class="benefit-card reveal" style="transition-delay:0.1s">
+                    <span class="benefit-num">02</span>
+                    <span class="benefit-icon">🧠</span>
+                    <h3>DISCIPLINA MENTAL</h3>
+                    <p>El boxeo enseña autocontrol, concentración y gestión del estrés. Mente clara, decisiones firmes.</p>
+                </div>
+                <div class="benefit-card reveal" style="transition-delay:0.2s">
+                    <span class="benefit-num">03</span>
+                    <span class="benefit-icon">❤️</span>
+                    <h3>SALUD CARDIOVASCULAR</h3>
+                    <p>Mejorá tu capacidad pulmonar y tu corazón. El boxeo es uno de los deportes más completos.</p>
+                </div>
+                <div class="benefit-card reveal" style="transition-delay:0.1s">
+                    <span class="benefit-num">04</span>
+                    <span class="benefit-icon">👥</span>
+                    <h3>COMUNIDAD REAL</h3>
+                    <p>Más de 100 años de historia generan una comunidad fuerte y solidaria como una familia.</p>
+                </div>
+                <div class="benefit-card reveal" style="transition-delay:0.2s">
+                    <span class="benefit-num">05</span>
+                    <span class="benefit-icon">🛡️</span>
+                    <h3>DEFENSA PERSONAL</h3>
+                    <p>Aprendé a moverte con seguridad. La autodefensa es parte natural del aprendizaje.</p>
+                </div>
+                <div class="benefit-card reveal" style="transition-delay:0.3s">
+                    <span class="benefit-num">06</span>
+                    <span class="benefit-icon">🎯</span>
+                    <h3>OBJETIVOS CLAROS</h3>
+                    <p>Cada clase te acerca a tu mejor versión. Metas medibles, progreso visible.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SCHEDULE -->
+    <section class="schedule" id="horarios">
+        <div class="container">
+            <div class="schedule-header">
+                <span class="section-tag reveal">// Horarios de clase</span>
+                <h2 class="section-heading reveal">ENCONTRÁ TU<br>HORARIO</h2>
+            </div>
+            <div class="schedule-table reveal">
+                <div class="table-header">
+                    <div>HORARIO</div>
+                    <div>LUNES</div>
+                    <div>MARTES</div>
+                    <div>MIÉRCOLES</div>
+                    <div>JUEVES</div>
+                    <div>VIERNES</div>
+                    <div>SÁBADO</div>
+                </div>
+                <div class="table-row">
+                    <div class="time-slot">7 — 9 HS</div>
+                    <div>Federico Rebagliati</div>
+                    <div>Federico Rebagliati</div>
+                    <div>Federico Rebagliati</div>
+                    <div>Federico Rebagliati</div>
+                    <div>Federico Rebagliati</div>
+                    <div>—</div>
+                </div>
+                <div class="table-row">
+                    <div class="time-slot">9 — 11 HS</div>
+                    <div>Sosa / Fede</div>
+                    <div>Sosa / Fede</div>
+                    <div>Sosa / Fede</div>
+                    <div>Sosa / Fede</div>
+                    <div>Sosa / Fede</div>
+                    <div>Federico Rebagliati</div>
+                </div>
+                <div class="table-row">
+                    <div class="time-slot">11 — 13 HS</div>
+                    <div>Sosa / Fede</div>
+                    <div>Sosa / Fede</div>
+                    <div>Sosa / Fede</div>
+                    <div>Sosa / Fede</div>
+                    <div>Sosa / Fede</div>
+                    <div>Federico Rebagliati</div>
+                </div>
+                <div class="table-row">
+                    <div class="time-slot">13 — 16 HS</div>
+                    <div>Barceló</div>
+                    <div>Barceló</div>
+                    <div>Barceló</div>
+                    <div>Barceló</div>
+                    <div>Barceló</div>
+                    <div>Barceló ★</div>
+                </div>
+                <div class="table-row">
+                    <div class="time-slot">16 — 18 HS</div>
+                    <div>Pitto</div>
+                    <div>Pitto</div>
+                    <div>Pitto</div>
+                    <div>Pitto</div>
+                    <div>Pitto</div>
+                    <div>—</div>
+                </div>
+                <div class="table-row">
+                    <div class="time-slot">18 — 20 HS</div>
+                    <div>S. Quintans</div>
+                    <div>S. Quintans</div>
+                    <div>S. Quintans</div>
+                    <div>S. Quintans</div>
+                    <div>S. Quintans</div>
+                    <div>Javier Torres</div>
+                </div>
+                <div class="table-row">
+                    <div class="time-slot">20 — 22 HS</div>
+                    <div>Barceló</div>
+                    <div>Charly / Barceló</div>
+                    <div>Barceló</div>
+                    <div>Charly / Barceló</div>
+                    <div>Barceló</div>
+                    <div>—</div>
+                </div>
+            </div>
+            <p class="schedule-note reveal">★ Los sábados de 13 a 16 hs se realiza "Día de Guanteo" con el profesor Barceló.</p>
+        </div>
+    </section>
+
+    <!-- PRICING -->
+    <section class="pricing" id="precios">
+        <div class="container">
+            <div class="pricing-header">
+                <span class="section-tag reveal">// Inversión</span>
+                <h2 class="section-heading reveal">VALORES DE<br>INSCRIPCIÓN</h2>
+                <p class="reveal">Sin contratos, sin sorpresas. Venís, te inscribís y empezás a entrenar.</p>
+            </div>
+            <div class="pricing-card reveal">
+                <div class="pricing-top">
+                    <div>
+                        <span class="pricing-badge">PRIMERA INSCRIPCIÓN</span>
+                        <div class="pricing-title">EMPEZÁ A ENTRENAR</div>
+                        <p class="pricing-desc">Incluye la primera cuota, matrícula anual y llavero de ingreso. Venís y arrancás ese mismo día.</p>
+                    </div>
+                    <div class="pricing-price-box">
+                        <div class="pricing-price">$70.000</div>
+                        <div class="pricing-period">pago único inicial</div>
+                    </div>
+                </div>
+                <div class="pricing-breakdown">
+                    <div class="pricing-item">
+                        <div class="pricing-item-price">$50.000</div>
+                        <div class="pricing-item-label">Cuota mensual</div>
+                    </div>
+                    <div class="pricing-item">
+                        <div class="pricing-item-price">$18.000</div>
+                        <div class="pricing-item-label">Matrícula anual</div>
+                    </div>
+                    <div class="pricing-item">
+                        <div class="pricing-item-price">$2.000</div>
+                        <div class="pricing-item-label">Llavero de ingreso</div>
+                    </div>
+                </div>
+                <div class="pricing-includes">
+                    <div class="pricing-feature">Entrenamiento todos los días</div>
+                    <div class="pricing-feature">Un horario a elección</div>
+                    <div class="pricing-feature">Acceso al sector de musculación</div>
+                </div>
+                <div class="pricing-cta">
+                    <a href="https://wa.me/541154035692?text=Hola!%20Quiero%20información%20para%20inscribirme" class="btn btn-primary" style="display:inline-block;width:100%;text-align:center;">QUIERO INSCRIBIRME</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq">
+        <div class="container">
+            <div class="faq-header">
+                <span class="section-tag reveal">// FAQ</span>
+                <h2 class="section-heading reveal">PREGUNTAS<br>FRECUENTES</h2>
+                <p class="reveal">Resolvemos tus dudas antes de que vengas al club.</p>
+            </div>
+            <div class="faq-grid reveal">
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        ¿Necesito experiencia previa para empezar?
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">No necesitas experiencia previa. Nuestros profesores están preparados para enseñar desde cero. El boxeo es para todos, sin importar tu edad ni tu condición física inicial.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        ¿A qué edad puedo empezar?
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">Aceptamos alumnos desde los 8 años. No hay límite de edad máxima. Tenemos clases para niños, adultos y personas mayores, todas adaptadas a su nivel y necesidades.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        ¿Qué necesito para entrenar?
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">Solo necesitás ropa deportiva y zapatillas. El club cuenta con todo el equipamiento: guantes, vendas, bolsas de arena, etc. Todo está disponible para usar.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        ¿Hay clases de prueba?
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">Sí, podés venir a conocer el club en cualquier horario de clase. Te mostraremos las instalaciones, te presentaremos a los profesores y podés empezar ese mismo día si te gusta.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        ¿Se puede combinar con musculación?
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">Sí, el acceso al sector de musculación está incluido en la cuota. Muchos alumnos combinan boxeo con entrenamiento de fuerza para mejores resultados.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        ¿Hay competencias?
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">Sí, organizamos competencias internas y participamos en torneos. Pero es completamente opcional. Muchos alumnos entrenan solo por fitness y autodefensa.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="contact" id="contacto">
+        <div class="container">
+            <div class="contact-header">
+                <span class="section-tag reveal">// Contacto</span>
+                <h2 class="section-heading reveal">TU PRIMER ROUND<br>TE ESPERA</h2>
+                <p class="reveal">Acercate al club en cualquier horario de clases. Te mostramos el gimnasio y podés arrancar ese mismo día.</p>
+            </div>
+            <div class="contact-grid">
+                <div class="info-list reveal">
+                    <div class="info-item">
+                        <div class="info-icon">📍</div>
+                        <div class="info-content">
+                            <h3>DIRECCIÓN</h3>
+                            <p>Av. Díaz Vélez 4422<br>Barrio de Almagro, Buenos Aires</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon">📞</div>
+                        <div class="info-content">
+                            <h3>TELÉFONO / WHATSAPP</h3>
+                            <p>11 5403-5692</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon">📧</div>
+                        <div class="info-content">
+                            <h3>EMAIL</h3>
+                            <p>info@almagroboxingclub.com.ar</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon">📸</div>
+                        <div class="info-content">
+                            <h3>INSTAGRAM</h3>
+                            <p>@almagroboxingclub</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon">🕐</div>
+                        <div class="info-content">
+                            <h3>HORARIO DE ATENCIÓN</h3>
+                            <p>Lunes a Viernes: 7:00 - 22:00 hs<br>Sábados: 9:00 - 20:00 hs</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="cta-box reveal">
+                    <img src="logo.png" alt="ABC Logo">
+                    <h3>¿LISTO PARA EMPEZAR?</h3>
+                    <p>Acercate al club en cualquier horario. Te mostramos las instalaciones, conocés a los profesores y si te gusta, ¡arrancás ese mismo día!</p>
+                    <div class="cta-box-buttons">
+                        <a href="https://wa.me/541154035692?text=Hola!%20Quiero%20información%20sobre%20las%20clases%20de%20boxeo" class="cta-btn-link primary">ESCRIBINOS POR WHATSAPP</a>
+                        <a href="https://maps.google.com/?q=Av.+Díaz+Vélez+4422,+Almagro,+Buenos+Aires" target="_blank" class="cta-btn-link">CÓMO LLEGAR</a>
+                        <a href="https://www.instagram.com/almagroboxingclub/" target="_blank" class="cta-btn-link">SEGUINOS EN INSTAGRAM</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="#inicio" class="logo">
+                        <img src="logo.png" alt="ABC Logo" style="height:32px;width:32px">
+                        <span class="logo-name" style="font-size:0.95rem">ALMAGRO BOXING</span>
+                    </a>
+                    <p>Formando campeones desde 1923. El club de boxeo más histórico de Argentina, en el corazón de Almagro, Buenos Aires.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>NAVEGACIÓN</h4>
+                    <ul>
+                        <li><a href="#inicio">Inicio</a></li>
+                        <li><a href="#nosotros">Nosotros</a></li>
+                        <li><a href="#horarios">Horarios</a></li>
+                        <li><a href="#precios">Precios</a></li>
+                        <li><a href="#contacto">Contacto</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>CONTACTO</h4>
+                    <ul>
+                        <li><a href="https://wa.me/541154035692">WhatsApp: 11 5403-5692</a></li>
+                        <li><a href="https://www.instagram.com/almagroboxingclub/">Instagram</a></li>
+                        <li><a href="https://maps.google.com/?q=Av.+Díaz+Vélez+4422">Av. Díaz Vélez 4422</a></li>
+                        <li><a href="mailto:info@almagroboxingclub.com.ar">Email</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2024 ALMAGRO BOXING CLUB — TODOS LOS DERECHOS RESERVADOS</p>
+                <p>103 AÑOS FORMANDO CAMPEONES · DESDE 1923</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WHATSAPP FLOAT -->
+    <a href="https://wa.me/541154035692?text=Hola!%20Quiero%20información%20sobre%20las%20clases%20de%20boxeo" class="whatsapp-float" title="Contactanos por WhatsApp">
+        <img src="whatsapp-btn.png" alt="WhatsApp">
+    </a>
+
+    <script>
+        // ─── NAV SCROLL ───
+        const header = document.getElementById('header');
+        window.addEventListener('scroll', () => {
+            header.classList.toggle('scrolled', window.scrollY > 50);
+        });
+
+        // ─── MOBILE MENU ───
+        function toggleMobile() {
+            const menu = document.getElementById('mobileMenu');
+            const ham = document.getElementById('hamburger');
+            menu.classList.toggle('active');
+            ham.classList.toggle('active');
+        }
+
+        function closeMobile() {
+            document.getElementById('mobileMenu').classList.remove('active');
+            document.getElementById('hamburger').classList.remove('active');
+        }
+
+        // ─── SMOOTH SCROLL ───
+        document.querySelectorAll('a[href^="#"]').forEach(a => {
+            a.addEventListener('click', function(e) {
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    e.preventDefault();
+                    const offset = 80;
+                    window.scrollTo({ top: target.offsetTop - offset, behavior: 'smooth' });
+                }
+            });
+        });
+
+        // ─── SCROLL REVEAL ───
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // ─── FAQ ───
+        function toggleFaq(element) {
+            const item = element.parentElement;
+            const isActive = item.classList.contains('active');
+            // Close all
+            document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
+            // Open clicked if it wasn't active
+            if (!isActive) item.classList.add('active');
+        }
+    </script>
+</body>
+</html>
